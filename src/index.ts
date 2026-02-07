@@ -5,7 +5,7 @@ import { SearchResult } from "./interface.js";
 
 try {
   await initSocket();
-  console.log('Type "Exit" at any time to leave.');
+  console.log('Search "Exit" to leave.');
   console.log("A long time ago in a galaxy far, far away…");
 } catch (error) {
   console.log(`Error occured ${error}`);
