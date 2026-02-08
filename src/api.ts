@@ -2,14 +2,25 @@ import { io, Socket } from "socket.io-client";
 import { SearchResult } from "./interface.js";
 
 let socket: Socket;
+let disconnectPromise: Promise<never> | null = null;
 
 export function initSocket(): Promise<void> {
   return new Promise((resolve, reject) => {
     socket = io("http://localhost:3000");
-
+    socket.once("connect_error", reject);
     socket.on("connect", resolve);
-    socket.on("error", reject);
+
+    disconnectPromise = new Promise((_, reject) => {
+      socket.on("disconnect", (reason) => {
+        reject(new Error(`Socket disconnected: ${reason}`));
+      });
+    });
   });
+}
+
+export function onDisconnect(): Promise<never> {
+  if (!disconnectPromise) throw new Error("Promise not initialized");
+  return disconnectPromise;
 }
 
 export function disconnectSocket() {
