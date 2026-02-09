@@ -8,7 +8,7 @@ let controller = false;
 try {
   await initSocket();
   controller = true;
-  console.log('Search "Exit_" to leave.');
+  console.log('Search "Exit" to leave.');
   console.log("A long time ago in a galaxy far, far away…");
 } catch (error) {
   console.log(`Error occured ${error}`);
